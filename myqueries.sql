@@ -1,6 +1,6 @@
 -- Q1
 
-
+select count(*) from person where year_born <1974 and last_name like '%e';
 
 -- Q2
 
