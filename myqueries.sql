@@ -172,6 +172,44 @@ order by
   my;
 
 -- Q10
-
-
-
+select 
+  id, 
+  first_name, 
+  last_name 
+from 
+  person 
+where 
+  id in (
+    select 
+      distinct id 
+    from 
+      writer 
+    where 
+      title in (
+        select 
+          title as num 
+        from 
+          writer 
+        group by 
+          title 
+        having 
+          count(id)> 1
+      )
+  ) 
+  and id not in (
+    select 
+      distinct id 
+    from 
+      writer 
+    where 
+      title in (
+        select 
+          title as num 
+        from 
+          writer 
+        group by 
+          title 
+        having 
+          count(id)= 1
+      )
+  );
