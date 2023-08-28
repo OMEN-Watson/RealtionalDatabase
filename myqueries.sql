@@ -112,6 +112,7 @@ WHERE title IN (
 
 -- Q9
 
+select my,array_agg( concat('(',title,',',my,')')) as newTitle from (select title, year_of_award as my from movie_award group by title,my union select title, year_of_award as cy from crew_award group by title,cy order by my,title)ut group by my;
 
 
 -- Q10
