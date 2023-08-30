@@ -9,12 +9,12 @@ select round( avg(run_time),2) from movie right join (select* from restriction w
 
 -- Q3
 
- select count(c) from ( select title,count(*) as c from crew group by title) as sub where c=2;
+select count(c) from ( select title,count(*) as c from crew group by title,production_year) as sub where c=2;
 
 
 -- Q4
 
- select count(distinct id) from director d left join director_award da on d.title=da.title where da.title is null;
+ select count(*) from (select distinct(d.id) from director d  left join ( select  id  from director d inner join director_award da on d.title = da.title) one on d.id=one.id where one.id is null) as t;
 
 
 -- Q5
@@ -87,28 +87,7 @@ FROM movie
 
 -- Q8
 
-SELECT title
-FROM movie
-WHERE title IN (
-		SELECT title
-		FROM crew_award
-	)
-	OR title IN (
-		SELECT title
-		FROM crew_award
-	)
-	OR title IN (
-		SELECT title
-		FROM director_award
-	)
-	OR title IN (
-		SELECT title
-		FROM writer_award
-	)
-	OR title IN (
-		SELECT title
-		FROM actor_award
-	);
+ select count(*) from (select title,production_year from movie_award group by title,production_year union select title,production_year from crew_award group by title,production_year union select title,production_year from director_award group by title,production_year union select title,production_year from writer_award group by title,production_year union select title,production_year from actor_award group by title,production_year) a;
 
 -- Q9
 
@@ -170,6 +149,8 @@ group by
   my 
 order by 
   my;
+
+
 
 -- Q10
 select 
