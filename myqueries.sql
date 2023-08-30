@@ -87,7 +87,13 @@ FROM movie
 
 -- Q8
 
- select count(*) from (select title,production_year from movie_award group by title,production_year union select title,production_year from crew_award group by title,production_year union select title,production_year from director_award group by title,production_year union select title,production_year from writer_award group by title,production_year union select title,production_year from actor_award group by title,production_year) a;
+
+  select  count(distinct title) from 
+ (select title,production_year from movie_award where lower(result)='won' 
+ union select title,production_year from crew_award where lower(result)='won' 
+ union select title,production_year from director_award where lower(result)='won' 
+ union select title,production_year from writer_award where lower(result)='won' 
+ union select title,production_year from actor_award  where lower(result)='won' ) a;
 
 -- Q9
 
